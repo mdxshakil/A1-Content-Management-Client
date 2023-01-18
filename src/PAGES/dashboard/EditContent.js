@@ -11,7 +11,7 @@ const EditContent = () => {
     const [{ title, body, image }, setContent] = useState({});
     const {register,handleSubmit} = useForm();
     useEffect(() => {
-        fetch(`http://localhost:5000/content/${id}`)
+        fetch(`https://a1-content-management-server-production.up.railway.app/content/${id}`)
             .then(res => res.json())
             .then(data => setContent(data))
     }, [id])
@@ -30,13 +30,13 @@ const EditContent = () => {
                 <h2>Previous Content</h2>
                 <h3>{title}</h3>
                 <p>{body}</p>
-                <img src={image} alt="Not available" />
+                <img style={{width:'30%'}} src={image} alt="Not available" />
             </div>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <input type="text" placeholder='Title' {...register('title')} />
-                <input type="text" placeholder='Body' {...register('body')}/>
-                <input type="text" placeholder='Image' {...register('image')}/>
-                <button type="submit">Submit</button>
+                <input type="text" placeholder='Title' {...register('title')} /> <br />
+                <input type="text" placeholder='Body' {...register('body')}/> <br />
+                <input type="text" placeholder='Image' {...register('image')}/> <br />
+                <input type="submit" value="Post" />
             </form>
         </div>
     )

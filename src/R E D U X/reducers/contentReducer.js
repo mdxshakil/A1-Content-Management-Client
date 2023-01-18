@@ -1,7 +1,8 @@
-import { ADD_CONTENT, DELETE_CONTENT, GET_CONTENT, UPDATE_CONTENT } from "../actionTypes/actionTypes";
+import { ADD_CONTENT, ADD_TO_READING_HISTORY, DELETE_CONTENT, GET_CONTENT, UPDATE_CONTENT } from "../actionTypes/actionTypes";
 
 const initialState = {
-    contents: []
+    contents: [],
+    history: []
 };
 
 const contentReducer = (state = initialState, action) => {
@@ -28,6 +29,19 @@ const contentReducer = (state = initialState, action) => {
                 contents: remainingContents
             }
         }
+        case ADD_TO_READING_HISTORY:
+            const exists = state.history.find(content => content._id === action.payload._id);
+            if (exists) {
+                const index = state.history.indexOf(exists);
+                state.history.splice(index, 1);
+                state.history.unshift(exists)
+                return state
+            } else {
+                return {
+                    ...state,
+                    history: [...state.history, action.payload]
+                }
+            }
         default: return state;
     }
 }

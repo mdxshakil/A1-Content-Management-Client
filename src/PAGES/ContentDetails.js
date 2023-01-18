@@ -6,10 +6,11 @@ const ContentDetails = () => {
     const [content, setContent] = useState({});
     const { id } = useParams();
     useEffect(() => {
-        fetch(`http://localhost:5000/content/${id}`)
+        fetch(`https://a1-content-management-server-production.up.railway.app/content/${id}`)
             .then(res => res.json())
             .then(data => setContent(data))
     }, [id])
+    
     return (
         <div className="blog-container">
         <h1 className="blog-title">{content.title}</h1>

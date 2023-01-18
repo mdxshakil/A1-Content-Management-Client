@@ -1,11 +1,15 @@
 import React from 'react'
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { ADD_TO_READING_HISTORY, FILTER_BY_TAGS } from '../R E D U X/actionTypes/actionTypes';
 
 const ContentCard = ({ content }) => {
-    const {_id, title, body, image, addedDate } = content;
+    const { _id, title, body, image, addedDate, tags } = content;
     const navigate = useNavigate();
-    const seeContentDetails = () =>{
+    const dispatch = useDispatch();
+    const seeContentDetails = () => {
         navigate(`/content/${_id}`)
+        dispatch({ type: ADD_TO_READING_HISTORY, payload: content })
     }
     const styles = {
         container: {
@@ -35,11 +39,17 @@ const ContentCard = ({ content }) => {
     };
 
     return (
-        <div style={styles.container} className='content-card' onClick={()=>seeContentDetails()}>
+        <div style={styles.container} className='content-card'>
             <img src={image} style={styles.image} alt="post" />
             <h3 style={styles.title}>{title}</h3>
-            <p style={styles.body}>{body}</p>
-            <small style={styles.date}>{addedDate.toString()}</small>
+            <p style={styles.body}>{body.slice(0, 100)}...
+                <small 
+                    className='read-more-btn'
+                    onClick={() => seeContentDetails()}>read more</small> </p>
+            <small style={styles.date}>{addedDate.toString()}</small> <br />
+            {
+                tags.split(',').map((tag, index) => <button className='tags-btn' key={index} onClick={()=>dispatch({type:FILTER_BY_TAGS, payload:tag})}>{tag}</button>)
+            }
         </div>
     )
 }

@@ -2,7 +2,7 @@ import { DELETE_CONTENT } from "../actionTypes/actionTypes"
 
 const deleteContent = (id) => {
     return async (dispatch, getState) => {
-        const response = await fetch(`http://localhost:5000/content/${id}`,{
+        const response = await fetch(`https://a1-content-management-server-production.up.railway.app/content/${id}`,{
             method: 'DELETE',
         })
         const result = await response.json()

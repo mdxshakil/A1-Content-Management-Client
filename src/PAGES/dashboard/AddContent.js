@@ -9,7 +9,7 @@ const AddContent = () => {
     const formSubmit = (data) => {
         const content = {
             ...data,
-            addedDate:new Date()
+            addedDate:new Date(),
         }
         dispatch(postContent(content));
         reset();
@@ -45,6 +45,16 @@ const AddContent = () => {
                 })} />
                 {errors.image && <p>{errors.image.message}</p>}
                 <label htmlFor="" className='title-label'>Image</label>
+            </div>
+            <div className='input-wrapper'>
+                <input type="text" placeholder=' ' className='title-input'  {...register('tags', {
+                    required: {
+                        value: true,
+                        message: 'Tags are required'
+                    }
+                })} />
+                {errors.tags && <p>{errors.tags.message}</p>}
+                <label htmlFor="" className='title-label'>Tags<small>(Comma Separated)</small></label>
             </div>
             <input type="submit" value="Post" />
         </form>
